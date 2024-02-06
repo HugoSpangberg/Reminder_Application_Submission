@@ -13,6 +13,9 @@ public class ReminderService(ReminderRepository reminderRepository, CategoryServ
 
 
     public ReminderEntity CreateReminder(string title, string description, DateTime dueDate)
+    {
+
+    }
 
     public ReminderEntity GetRemindersById(int id)
     {
