@@ -12,8 +12,8 @@ using Reminder_Shared.Context;
 namespace Reminder_Shared.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240205160454_CreateTables")]
-    partial class CreateTables
+    [Migration("20240207200633_CreateTable")]
+    partial class CreateTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,10 +59,7 @@ namespace Reminder_Shared.Migrations
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReminderStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReminderStatusEntityId")
+                    b.Property<int>("ReminderStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -76,7 +73,7 @@ namespace Reminder_Shared.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ReminderStatusEntityId");
+                    b.HasIndex("ReminderStatusId");
 
                     b.HasIndex("UserId");
 
@@ -151,9 +148,9 @@ namespace Reminder_Shared.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reminder_Shared.Entities.ReminderStatusEntity", "ReminderStatusEntity")
+                    b.HasOne("Reminder_Shared.Entities.ReminderStatusEntity", "ReminderStatus")
                         .WithMany()
-                        .HasForeignKey("ReminderStatusEntityId")
+                        .HasForeignKey("ReminderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -165,7 +162,7 @@ namespace Reminder_Shared.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("ReminderStatusEntity");
+                    b.Navigation("ReminderStatus");
 
                     b.Navigation("User");
                 });

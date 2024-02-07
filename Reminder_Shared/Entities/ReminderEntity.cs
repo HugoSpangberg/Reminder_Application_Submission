@@ -19,7 +19,7 @@ public class ReminderEntity
     public int CategoryId { get; set; }
     public CategoryEntity Category { get; set; } = null!;
 
-    public int ReminderStatus { get; set; }
-    public ReminderStatusEntity ReminderStatusEntity { get; set; } = null!;
+    public int ReminderStatusId { get; set; }
+    public ReminderStatusEntity ReminderStatus { get; set; } = null!;
 
 }

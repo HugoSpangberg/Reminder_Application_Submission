@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Reminder_Shared.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTables : Migration
+    public partial class CreateTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,8 +61,7 @@ namespace Reminder_Shared.Migrations
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ReminderStatus = table.Column<int>(type: "int", nullable: false),
-                    ReminderStatusEntityId = table.Column<int>(type: "int", nullable: false)
+                    ReminderStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,8 +73,8 @@ namespace Reminder_Shared.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reminders_RemindersStatus_ReminderStatusEntityId",
-                        column: x => x.ReminderStatusEntityId,
+                        name: "FK_Reminders_RemindersStatus_ReminderStatusId",
+                        column: x => x.ReminderStatusId,
                         principalTable: "RemindersStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -114,9 +113,9 @@ namespace Reminder_Shared.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reminders_ReminderStatusEntityId",
+                name: "IX_Reminders_ReminderStatusId",
                 table: "Reminders",
-                column: "ReminderStatusEntityId");
+                column: "ReminderStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reminders_UserId",

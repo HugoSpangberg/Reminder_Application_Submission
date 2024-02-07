@@ -1,4 +1,5 @@
 ﻿
+using Reminder_Shared.Dto;
 using Reminder_Shared.Entities;
 using Reminder_Shared.Repositories;
 
@@ -9,10 +10,10 @@ public class ReminderStatusService(ReminderStatusRepository reminderStatusReposi
     private readonly ReminderStatusRepository _reminderStatusRepository = reminderStatusRepository;
 
 
-    public ReminderStatusEntity CreateReminderStatus(bool isActive)
+    public ReminderStatusEntity CreateReminderStatus(ReminderStatusDTO reminderStatus)
     {
-        var reminderStatusEntity = _reminderStatusRepository.Get(x => x.IsActive == false); ;
-        reminderStatusEntity ??= _reminderStatusRepository.Create(new ReminderStatusEntity { IsActive = isActive });
+        var reminderStatusEntity = _reminderStatusRepository.Get(x => x.IsActive == false);
+        reminderStatusEntity ??= _reminderStatusRepository.Create(new ReminderStatusEntity { IsActive = reminderStatus.IsActive });
         return reminderStatusEntity;
     }
 

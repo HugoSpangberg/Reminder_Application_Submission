@@ -1,31 +1,32 @@
-﻿using Reminder_Shared.Entities;
+﻿using Reminder_Shared.Dto;
+using Reminder_Shared.Entities;
 using Reminder_Shared.Repositories;
 
 namespace Reminder_Shared.Services;
 
-public class UsersProfileService(UsersProfileRepository userProfileRepository, UsersService usersService)
+public class UsersProfileService(UsersProfileRepository userProfileRepository)
 {
     private readonly UsersProfileRepository _userProfileRepository = userProfileRepository;
-    private readonly UsersService _usersService = usersService;
 
 
-    public UsersProfileEntity CreateUsersProfile(string firstName, string lastName, string email)
+
+    public UsersProfileEntity CreateUsersProfile(UsersProfileDTO usersProfile)
     {
-        var userEntity = _usersService.CreateUser(email);
+
         var usersProfileEntity = _userProfileRepository.Create(new UsersProfileEntity { 
             
-            FirstName = firstName, 
-            LastName = lastName,
-            UserId = userEntity.Id    
+            FirstName = usersProfile.FirstName, 
+            LastName = usersProfile.LastName,
+
             
         });
         _userProfileRepository.Create(usersProfileEntity);
         return usersProfileEntity;
     }
 
-    public UsersProfileEntity GetUsersProfile(string firstName, string lastName)
+    public UsersProfileEntity GetUsersProfile(UsersProfileDTO usersProfile)
     {
-        var usersProfileEntity = _userProfileRepository.Get(x => x.FirstName == firstName && x.LastName == lastName);
+        var usersProfileEntity = _userProfileRepository.Get(x => x.FirstName == usersProfile.FirstName && x.LastName == usersProfile.LastName);
         return usersProfileEntity;
     }
 

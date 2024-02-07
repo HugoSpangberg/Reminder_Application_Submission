@@ -1,25 +1,32 @@
 ﻿
+using Reminder_Shared.Dto;
 using Reminder_Shared.Entities;
 using Reminder_Shared.Repositories;
 
 namespace Reminder_Shared.Services;
 
-public class UsersService(UsersRepository usersRepository, UsersProfileService usersProfileService)
+public class UsersService(UsersRepository usersRepository)
 {
     private readonly UsersRepository _usersRepository = usersRepository;
-    private readonly UsersProfileService _usersProfileService = usersProfileService;
 
 
-    public UsersEntity CreateUser(string email)
+
+    public UsersEntity CreateUser(UsersDTO user)
     {
-        var userEntity = _usersRepository.Get(x => x.Email == email);
-        userEntity ??= _usersRepository.Create(new UsersEntity { Email = email });
+        var userEntity = _usersRepository.Get(x => x.Email == user.Email);
+        userEntity ??= _usersRepository.Create(new UsersEntity { Email = user.Email });
         return userEntity;
     }
 
-    public UsersEntity GetUserByEmail(string email)
+    public UsersEntity GetUserByEmail(UsersDTO userEmail)
     {
-        var usersEntity = _usersRepository.Get(x => x.Email == email);
+        var usersEntity = _usersRepository.Get(x => x.Email == userEmail.Email);
+        return usersEntity;
+    }
+
+    public UsersEntity GetUserById(UsersDTO userEmail)
+    {
+        var usersEntity = _usersRepository.Get(x => x.Id == userEmail.Id);
         return usersEntity;
     }
 
@@ -40,4 +47,6 @@ public class UsersService(UsersRepository usersRepository, UsersProfileService u
         _usersRepository.Delete(x => x.Id == id);
         return true;
     }
+
+
 }

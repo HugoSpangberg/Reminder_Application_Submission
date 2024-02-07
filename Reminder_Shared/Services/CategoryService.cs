@@ -1,4 +1,5 @@
 ﻿
+using Reminder_Shared.Dto;
 using Reminder_Shared.Entities;
 using Reminder_Shared.Repositories;
 
@@ -10,16 +11,21 @@ public class CategoryService(CategoryRepository categoryRepository)
 
 
 
-    public CategoryEntity CreateCategory(string categoryName)
+    public CategoryEntity CreateCategory(CategoryDTO category)
     {
-        var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
-        categoryEntity ??= _categoryRepository.Create(new CategoryEntity { CategoryName = categoryName });
+        var categoryEntity = _categoryRepository.Get(x => x.CategoryName == category.CategoryName);
+
+        if (categoryEntity == null)
+        {
+            categoryEntity = _categoryRepository.Create(new CategoryEntity { CategoryName = category.CategoryName });
+        }
+
         return categoryEntity;
     }
 
-    public CategoryEntity GetCategoryName(string categoryName)
+    public CategoryEntity GetCategoryName(CategoryDTO category)
     {
-        var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
+        var categoryEntity = _categoryRepository.Get(x => x.CategoryName == category.CategoryName);
         return categoryEntity;
     }
 
