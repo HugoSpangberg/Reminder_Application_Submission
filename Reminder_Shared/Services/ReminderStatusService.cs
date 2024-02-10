@@ -12,37 +12,86 @@ public class ReminderStatusService(ReminderStatusRepository reminderStatusReposi
 
     public ReminderStatusEntity CreateReminderStatus(ReminderStatusDTO reminderStatus)
     {
-        var reminderStatusEntity = _reminderStatusRepository.Get(x => x.IsActive == false);
-        reminderStatusEntity ??= _reminderStatusRepository.Create(new ReminderStatusEntity { IsActive = reminderStatus.IsActive });
-        return reminderStatusEntity;
+        try
+        {
+            var reminderStatusEntity = _reminderStatusRepository.Get(x => x.IsActive == false);
+            reminderStatusEntity ??= _reminderStatusRepository.Create(new ReminderStatusEntity { IsActive = reminderStatus.IsActive });
+            return reminderStatusEntity;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Creating Reminder status: {ex.Message}");
+            return null!;
+        }
     }
 
     public IEnumerable<ReminderStatusEntity> GetAllReminderStatus()
     {
-        var allReminderStatus = _reminderStatusRepository.GetAll();
-        return allReminderStatus;
+        try
+        {
+            var allReminderStatus = _reminderStatusRepository.GetAll();
+            return allReminderStatus;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error All Reminder status: {ex.Message}");
+            return null!;
+        }
+
     }
     public IEnumerable<ReminderStatusEntity> GetCompletedReminders()
     {
-        var completedReminders = _reminderStatusRepository.GetAll().Where(x => x.IsActive == false);
-        return completedReminders;
+        try
+        {
+            var completedReminders = _reminderStatusRepository.GetAll().Where(x => x.IsActive == false);
+            return completedReminders;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Getting Completed Reminder: {ex.Message}");
+            return null!;
+        }
     }
 
     public IEnumerable<ReminderStatusEntity> GetActiveReminders()
     {
-        var activeReminders = _reminderStatusRepository.GetAll().Where(x => x.IsActive == true);
-        return activeReminders;
+        try
+        {
+            var activeReminders = _reminderStatusRepository.GetAll().Where(x => x.IsActive);
+            return activeReminders;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Getting Active Reminders: {ex.Message}");
+            return null!;
+        }
     }
 
     public ReminderStatusEntity UpdateReminderStatus(ReminderStatusEntity categoryEntity)
     {
-        var updatedReminderStatusEntity = _reminderStatusRepository.Update(x => x.Id == categoryEntity.Id, categoryEntity);
-        return updatedReminderStatusEntity;
+        try
+        {
+            var updatedReminderStatusEntity = _reminderStatusRepository.Update(x => x.Id == categoryEntity.Id, categoryEntity);
+            return updatedReminderStatusEntity;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Update Reminder: {ex.Message}");
+            return null!;
+        }
     }
 
     public bool DeleteReminderStatus(bool isActive)
     {
-        _reminderStatusRepository.Delete(x => x.IsActive == false);
-        return isActive;
+        try
+        {
+            _reminderStatusRepository.Delete(x => x.IsActive == false);
+            return isActive;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error Update Reminder: {ex.Message}");
+            return isActive;
+        }
     }
 }

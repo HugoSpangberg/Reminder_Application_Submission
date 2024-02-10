@@ -38,6 +38,20 @@ public class BaseRepository<TEntity>(DataContext context) where TEntity : class
         }
     }
 
+    public virtual IEnumerable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate)
+    {
+        try
+        {
+            return _context.Set<TEntity>().Where(predicate).ToList();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return Enumerable.Empty<TEntity>();
+        }
+    }
+
+
     public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
     {
         try
